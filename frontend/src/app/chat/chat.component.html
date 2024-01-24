@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="sidebar">
+    <h3 class="my-chatrooms">My Chatrooms</h3>
+    <ul class="chatroom-list">
+      <li class="chatroom-item" *ngFor="let chatroom of chatrooms" (click)="selectChatroom(chatroom)" [class.selected]="chatroom === selectedChatroom">
+        {{ chatroom.name }} ({{ chatroom.totalMembers }})
+        <button (click)="leaveChatroom($event,chatroom.name)" class="leave-button">X</button>
+      </li>
+    </ul>
+    <button (click)="showJoinCreateChatroom()" [class.join-button]="!displayJoinCreateChatroom" [class.hide-button]="displayJoinCreateChatroom">
+      {{ displayJoinCreateChatroom ? 'Hide' : 'Create or join chatroom' }}
+    </button>
+    <app-join-create-chatroom [user]="user" [socket]="socket" [joinChatroom]="joinChatroom" *ngIf="displayJoinCreateChatroom"></app-join-create-chatroom>
+
+  </div>
+    <div class="main-window">
+
+    <ng-container *ngIf="selectedChatroom.name === ''; else chatMessages">
+      <div class="chat-messages">No selected chatroom</div>
+    </ng-container>
+    <ng-template #chatMessages>
+        <div class="chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight" #chatMessagesContainer>
+            <!-- Chat messages go here -->
+            <div class="selected-chatroom"> {{ selectedChatroom.name}}</div>
+            <div class="chat-message" *ngFor="let message of visibleMessages">{{ message }}</div>
+        </div>
+
+        <div id="input-container" class="input-container">
+            <input type="text" [(ngModel)]="message" class="input-field" (keyup.enter)="sendMessage()" placeholder="Type your message and press Enter or click Send">
+            <button type="submit" class="send-button" (click)="sendMessage()">Send</button>
+        </div>
+        </ng-template>
+  </div>
+<div class="user-list">
+            <h3 class="my-chatrooms">User List</h3>
+            <div class="user" *ngFor="let user of selectedChatroom.users">{{ user }}</div>
+        </div>
+</div>

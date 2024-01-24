@@ -1,0 +1,12 @@
+<div class="login-container">
+  <h1 class="login-title">Real-time Chat App</h1>
+  <h2> Welcome! Login and enjoy talking. </h2>
+  <div class="login-form">
+    <input type="text" [(ngModel)]="username" placeholder="Username" class="login-input" />
+    <input type="password" [(ngModel)]="password" placeholder="Password" class="login-input">
+    <button class="login-button" (click)="login()">Login</button>
+  </div>
+  <div class="signup-link">
+    Don't have an account? <a routerLink="/signup" class="signup-highlight">Sign Up!</a>
+  </div>
+</div>
